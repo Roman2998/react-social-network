@@ -1,7 +1,10 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
 import * as Yup from 'yup';
+import {login} from "../../Redux/auth-reducer";
+import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
+
 
 const SignupSchema = Yup.object().shape({
     email: Yup.string()
@@ -14,15 +17,16 @@ const SignupSchema = Yup.object().shape({
 });
 
 
-const LoginForm = (props) => {
+const LoginForm = ({login}) => {
     return (
         <div>
             <Formik
                 initialValues={{ email: '', password: '', rememberMe: false }}
                 validationSchema={SignupSchema}
+
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
+                        login(values.email, values.password, values.rememberMe);
                         setSubmitting(false);
                     }, 400);
                 }}
@@ -55,11 +59,20 @@ const LoginForm = (props) => {
     )
 }
 
-const Login = (props) => {
+const Login = ({isAuth, loginSuccess, error, login }) => {
+    if (isAuth) {
+        return <Redirect to={"/profile"} />
+    }
     return <div>
         <h1>Login</h1>
-        <LoginForm/>
+        {loginSuccess ? "" : <span>{error}</span>}
+        <LoginForm login={login}/>
     </div>
 }
+const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth,
+    loginSuccess: state.auth.loginSuccess,
+    error: state.auth.error
+})
 
-export default Login;
+export default connect(mapStateToProps, {login})(Login);
