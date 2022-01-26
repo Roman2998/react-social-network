@@ -1,0 +1,12 @@
+.grid {
+    row-gap: 16px;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+}
+.grid a {
+    color: red;
+}
+.grid h1{
+    margin-bottom: auto;
+}

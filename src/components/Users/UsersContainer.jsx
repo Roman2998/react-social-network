@@ -57,5 +57,6 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-	connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsers: requestUsers})
+	connect(mapStateToProps, {follow, unfollow, setCurrentPage,
+		toggleFollowingProgress, getUsers: requestUsers})
 )(UsersContainer);

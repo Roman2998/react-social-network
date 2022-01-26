@@ -1,37 +1,64 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/user.png";
+import ProfileDataForm from "./ProfileDataForm";
 
-const ProfileInfo = ({profile, updateStatus, status}) => {
+const ProfileInfo = ({profile, updateStatus, status, isOwner, savePhoto, saveProfile}) => {
 
-    if (!profile) {
-        return <Preloader />
-    }
-    const contacts = profile.contacts;
+	let [editMode, setEditMode] = useState(false);
 
-    return (
-    <div>
-        <div className={s.descriptionBlock}>
-            <img alt="user" src={profile.photos.large != null ? profile.photos.large : userPhoto} className={s.userPhoto}/>
-            <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
-            <p>Обо мне: {profile.aboutMe ? profile.aboutMe : "Пусто"}</p>
-            <p>Мои контакты:</p>
-            <p>facebook: {contacts.facebook ? contacts.facebook : "Пусто"}</p>
-            <p>website: {contacts.website ? contacts.website : "Пусто"}</p>
-            <p>vk: {contacts.vk ? contacts.vk : "Пусто"}</p>
-            <p>twitter: {contacts.twitter ? contacts.twitter : "Пусто"}</p>
-            <p>instagram: {contacts.instagram ? contacts.instagram : "Пусто"}</p>
-            <p>youtube: {contacts.youtube ? contacts.youtube : "Пусто"}</p>
-            <p>github: {contacts.github ? contacts.github : "Пусто"}</p>
-            <p>mainLink: {contacts.mainLink ? contacts.mainLink : "Пусто"}</p>
-            <p>Ищу работу: {profile.lookingForAJob ? "да" : "нет"}</p>
-            <p>Ищу работу описание: {profile.lookingForAJobDescription ? profile.lookingForAJobDescription : "Пусто"}</p>
-            <p>ФИО: {profile.fullName ? profile.fullName : "Пусто"}</p>
-        </div>
-    </div>
-    )
+	if (!profile) {
+		return <Preloader/>
+	}
+
+	const onMainPhotoSelected = (e) => {
+		if (e.target.files.length) {
+			savePhoto(e.target.files[0]);
+		}
+	}
+
+	return (
+		<div>
+			<div className={s.descriptionBlock}>
+				<img alt="user" src={profile.photos.large || userPhoto} className={s.userPhoto}/>
+				{isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
+				<ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+				{editMode
+					? <ProfileDataForm profile={profile} saveProfile={saveProfile} setEditMode={setEditMode} />
+					: <ProfileData goToEditMode={() => {setEditMode(true)}} profile={profile} isOwner={isOwner}/> }
+			</div>
+		</div>
+	)
 }
+
+const ProfileData = ({profile, isOwner, goToEditMode}) => {
+	return <div>
+		{isOwner && <div><button onClick={goToEditMode}>Edit</button></div>}
+		<div>
+			<b>ФИО:</b> {profile.fullName || "Пусто"}
+		</div>
+		<div>
+			<b>Обо мне:</b> {profile.aboutMe || "Пусто"}
+		</div>
+		<div>
+			<b>Ищу работу:</b> {profile.lookingForAJob ? "да" : "нет"}
+		</div>
+		<div>
+			<b>Мои профессиональные навыки:</b> {profile.lookingForAJobDescription || "Пусто"}
+		</div>
+		<div>
+			<b>Мои контакты:</b> {Object.keys(profile.contacts).map(key => {
+			return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]} />
+		})}
+		</div>
+	</div>
+}
+
+const Contact = ({contactTitle, contactValue }) => {
+	return <div className={s.contact}><b>{contactTitle}:</b> {contactValue}</div>
+}
+
 
 export default ProfileInfo;
