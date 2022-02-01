@@ -1,11 +1,12 @@
 import React from 'react';
-import preloader from '../../../assets/images/preloader.svg';
+import classes from './Preloader.module.css'
 
+let Preloader = ({ flag = true }) => {
+    if (!flag) return "";
 
-let Preloader = (props) => {
-    return <div style={ {backgroundColor: 'white'} }>
-        <img alt="preloader" src={ preloader } />
-    </div>
+    return <section className={classes.preloaderWrap}>
+        <div className={classes.preloaderPulse}/>
+    </section>
 }
 
 export default Preloader;

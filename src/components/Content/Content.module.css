@@ -1,0 +1,9 @@
+.content {
+    position: relative;
+    margin-right: 0;
+
+    padding: 0;
+    min-width: 265px;
+    min-height: 500px;
+    border: none;
+}

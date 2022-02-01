@@ -1,21 +1,87 @@
 .app-wrapper {
-	
+	display: flex;
+	flex-direction: column;
 	margin: 0 auto;
-	display: grid;
 	width: 1200px;
+	height: 100%;
+	max-width: 90vw;
 
-	grid-template-areas: 
-	"h h"
-	"n c";
-
-	grid-template-rows: 60px 1fr;
-	grid-template-columns: 2fr 10fr;
-	/* grid-gap: 10px; */
+}
+.app-wrapper * {
+	box-sizing: border-box;
 }
 
-.app-wrapper-content {
-	grid-area: c;
-	background-color: cornflowerblue;
+h2 {
+	font-size: var(--size-font-title);
+}
+
+.component {
+	display: flex;
+
+	border: 1px solid var(--color-border-dark);
+
+	padding: 10px;
+	margin: 5px;
+	height: max-content;
+	max-height: 100%;
+	width: 100%;
+}
+
+.component--wrap {
+	width: 100%;
+}
+
+.component--sidebar {
+	margin-left: 0;
+	flex-direction: column;
+}
+
+.sidebar--item {
+	color: var(--color-txt-dark);
+	padding: 5px 10px;
+	text-decoration: none;
+	transition: var(--transition);
+}
+
+.sidebar--item:hover {
+	background-color: var(--color-bg-select-dark);
+}
+
+.sidebar--item--active {
+	background-color: var(--color-bg-select-dark);
+	color: var(--color-txt-active-dark);
+}
+
+@media screen and (max-width: 768px) {
+	.component {
+		margin: 5px 0;
+	}
+
+	.component--sidebar {
+		background-color: var(--color-bg-dark);
+		min-width: 250px;
+		max-width: 500px;
+		width: max-content;
+		margin: 10px;
+		animation-name: sidebar-comp-appear;
+		animation-duration: 0.3s;
+	}
+
+	@media screen and (max-width: 450px) {
+		.app-wrapper {
+			max-width: 98vw;
+			width: 95vw;
+		}
+	}
+}
+
+@keyframes sidebar-comp-appear {
+	from {
+		transform: translateY(-100vh);
+	}
+	to {
+		transform: translateY(0);
+	}
 }
 
 

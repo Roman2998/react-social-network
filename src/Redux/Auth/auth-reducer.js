@@ -1,4 +1,4 @@
-import {authAPI, securityAPI} from "../api/api";
+import {authAPI, securityAPI} from "../../api/api";
 
 const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA';
 const SET_LOGIN_SUCCESS = 'samurai-network/auth/SET_LOGIN_SUCCESS';
