@@ -1,39 +1,11 @@
-.dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+.dialogsList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-.dialogsItems {
-    padding: 10px;
-    background-color: #198CA2;
-}
-
-.dialogItem img {
-    width: 50px;
-    border-radius: 30px;
-
-}
-.dialogItem a {
-    color: white;
-    text-decoration: none;
-}
-.dialogItem a.activeLink {
-    color: gold;
-}
-
-.messages {
-    padding: 10px;
-    background-color: #227196;
-}
-
-.message {
-    color: white;
-    background-color: #243F3F;
-    padding: 10px;
-    margin: 15px 20px;
-
-}
-.message img {
-    width: 30px;
-    border-radius: 10px;
+.title {
+    padding: 0 10px 5px;
+    margin: 0 0 10px;
+    width: 100%;
 }

@@ -1,0 +1,38 @@
+.formTitle {
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form > .field {
+    margin: 5px 0;
+    max-width: 400px;
+    width: 100%;
+}
+
+.error {
+    background-color: var(--color-error-bg-dark);
+    color: var(--color-error-txt-dark);
+    border: 1px solid var(--color-error-border-dark);
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.captcha {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.rememberMe {
+    display: flex;
+    align-items: center;
+}
+
+.rememberMe > p {
+    margin-left: 10px;
+}

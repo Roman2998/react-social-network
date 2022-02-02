@@ -1,0 +1,21 @@
+.message {
+    background-color: var(--color-bg-select-dark);
+    width: fit-content;
+    max-width: 600px;
+    padding: 10px 15px;
+    color: var(--color-txt-active-dark);
+    margin: 5px 0;
+    word-wrap: break-word;
+}
+
+.left {
+    align-self: flex-start;
+}
+
+.right {
+    align-self: flex-end;
+    background: none;
+    color: var(--color-txt-dark);
+    border: 2px solid var(--color-border-dark);
+}
+

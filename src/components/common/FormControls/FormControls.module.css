@@ -1,0 +1,46 @@
+.container {
+    position: relative;
+}
+
+.input {
+    padding: 5px;
+    border: 2px solid var(--color-border-dark);
+    color: var(--color-txt-dark);
+    background-color: var(--color-bg-input-dark);
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    resize: vertical;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+}
+
+.error .input {
+    border-color: var(--color-error-border-dark);
+}
+
+.errorMessage {
+    position: absolute;
+    top: -50px;
+
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    width: fit-content;
+    height: 50px;
+    text-align: center;
+
+    background-color: var(--color-error-bg-dark);
+    border: 1px solid var(--color-error-border-dark);
+    color: var(--color-error-txt-dark);
+}
+

@@ -1,0 +1,82 @@
+.profileMainInfo {
+    display: flex;
+    height: max-content;
+    width: 100%;
+    padding: 0 0 10px;
+    font-size: calc(1.2 * var(--size-font-base));
+}
+
+.profileAvatar {
+    height: 100%;
+    width: max-content;
+}
+
+.profileStatus {
+    padding: 0 10px;
+    flex-grow: 1;
+}
+
+.profileId {
+    font-size: calc(3.5 * var(--size-font-base));
+}
+
+.profileName {
+    font-size: calc(2 * var(--size-font-base));
+    font-weight: bold;
+    color: var(--color-txt-dark);
+}
+
+.profileDesc {
+
+}
+
+.selectImgBtn > input {
+    display: none;
+}
+
+.selectImgBtn > .button {
+    width: 100%;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: var(--size-font-btn);
+    background-color: var(--color-bg-btn-dark);
+    border: 1px solid var(--color-border-dark);
+
+    transition: var(--transition);
+}
+
+.selectImgBtn > .button:hover {
+    background-color: var(--color-bg-btn-hover-dark);
+    border: 1px solid var(--color-border-hover);
+}
+
+.profileNameWrap {
+    display: flex;
+    width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+    .profileNameWrap {
+        align-items: flex-end;
+        flex-direction: column;
+    }
+
+    .profileStatus {
+        text-align: right;
+        padding-right: 0;
+    }
+
+    @media screen and (max-width: 450px) {
+        .profileAvatar {
+            width: 50%;
+        }
+
+        .profileNameWrap {
+            width: 50%;
+        }
+    }
+}

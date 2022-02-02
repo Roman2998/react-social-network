@@ -26,7 +26,10 @@ export const usersAPI = {
 			.then(response => {
 				return response.data
 			});
-	}
+	},
+	getProfile(userId) { ///////////////////////////////
+	return profileAPI.getProfile(userId);
+}
 }
 
 export const profileAPI = {
@@ -34,15 +37,18 @@ export const profileAPI = {
 		return instance.get(`profile/${userId}`);
 	},
 	//
-	saveProfile(profile) {
-		return instance.put(`profile/`, profile);
+	updateProfile(profile) {
+		return instance.put(`profile/`, profile)
+			.then(response => response.data); ///////;
 	},
 	//
 	getStatus(userId) {
-		return instance.get(`profile/status/${userId}`);
+		return instance.get(`profile/status/${userId}`)
+			.then(response => response.data);////
 	},
 	updateStatus(status) {
-		return instance.put(`profile/status`, {status: status});
+		return instance.put(`profile/status`, {status})
+			.then(response => response.data);////
 	},
 	savePhoto(photoFile) {
 		const formData = new FormData();

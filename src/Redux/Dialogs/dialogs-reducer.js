@@ -1,46 +1,49 @@
-//const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
-const SEND_MESSAGE = 'SEND_MESSAGE';
+import { reset } from 'redux-form'
+
+const SEND_MESSAGE = 'SEND_MESSAGE'
 
 let initialState = {
 	dialogs: [
-		{id: 1, name: 'Dimych'},
-		{id: 2, name: 'Andrey'},
-		{id: 3, name: 'Sveta'},
-		{id: 4, name: 'Sasha'},
-		{id: 5, name: 'Roman'}
+		{ id: 1, name: 'Dimych' },
+		{ id: 2, name: 'Andrey' },
+		{ id: 3, name: 'Sveta' },
+		{ id: 4, name: 'Sasha' },
+		{ id: 5, name: 'Roman' }
 	],
-	messages : [
-		{id: 1, message: 'Hi'},
-		{id: 2, message: 'Hi is your it?'},
-		{id: 3, message: 'Yo'},
-		{id: 4, message: 'Yo'},
-		{id: 5, message: 'Yo'}
+	messages: [
+		{ id: 1, message: 'Hey', mine: false },
+		{ id: 2, message: 'Yo', mine: false },
+		{ id: 3, message: 'What\'s up bro?', mine: false },
+		{ id: 4, message: 'Yo', mine: true },
+		{ id: 5, message: 'Nothing much', mine: true },
+		{ id: 6, message: 'Just getting ready for graduation', mine: true }
 	],
-	//newMessageBody: ""
-};
+}
 
 const dialogsReducer = (state = initialState, action) => {
 
 	switch (action.type) {
-		// case UPDATE_NEW_MESSAGE_BODY:
-		// 	return  {
-		// 		...state,
-		// 		newMessageBody: action.body
-		// 	};
 		case SEND_MESSAGE:
-			let body = action.newMessageBody; //state.newMessageBody--> action.newMessageBody
+			const newMessage = {
+				id: 7,
+				message: action.message,
+				mine: true
+			};
+
 			return {
 				...state,
-				//newMessageBody: '',
-				messages: [...state.messages, {id: 6, message: body}]
+				messages: [...state.messages, {...newMessage}],
 			};
 		default:
 			return state;
 	}
 }
 
-export const sendMessageCreator = (newMessageBody) => ({ type: SEND_MESSAGE, newMessageBody }) //add newMessageBody
-// export const updateNewMessageBodyCreator = (body) =>
-// 	({ type: UPDATE_NEW_MESSAGE_BODY, body: body })
+export const sendMessage = message => ({type: SEND_MESSAGE, message});
+
+export const sendMessageTC = message => dispatch => {
+	dispatch(sendMessage(message));
+	dispatch(reset("dialogAddMessageForm"));
+}
 
 export default dialogsReducer;

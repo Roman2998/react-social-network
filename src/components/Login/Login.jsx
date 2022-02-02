@@ -1,22 +1,71 @@
 import React from "react";
-import {login} from "../../Redux/Auth/auth-reducer";
+import {Input} from "../common/FormControls/FormControls";
+import {required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
+import {login} from "../../Redux/Auth/auth-reducer";
 import {Redirect} from "react-router-dom";
-import LoginForm from "./LoginForm";
+import classes from "./Login.module.css";
+import Button from '../common/Button/Button';
+import {reduxForm, Field} from "redux-form";
+import {getAuthCaptcha, getIsAuth} from "../../Redux/Auth/auth-selectors";
 
+const LoginForm = ({handleSubmit, captchaUrl, error}) =>
+    <form className={classes.form} onSubmit={handleSubmit}>
+        <div className={classes.field}>
+            <Field placeholder={"Email"} name={"email"}
+                   validate={[required]} component={Input}/>
+        </div>
+        <div className={classes.field}>
+            <Field type="password" placeholder={"Password"} name={"password"}
+                   validate={[required]}
+                   component={Input}/>
+        </div>
+        <label className={classes.rememberMe}>
+            <Field component={Input} name={"rememberMe"} type={"checkbox"}/>
+            <p>Remember Me</p>
+        </label>
+        {captchaUrl
+            ? <div className={classes.captcha}>
+                <img alt={'captcha'} src={captchaUrl}/>
+                <Field component={Input} placeholder={"Input symbols from the image"} name={"captcha"}/>
+            </div>
+            : ""}
+        {error
+            ? <div className={classes.error}>{error}</div>
+            : ""
+        }
+        <div>
+            <Button>Login</Button>
+        </div>
+    </form>
 
-const Login = ({isAuth, loginSuccess, error, login, ...props}) => {
-    if (isAuth) {
-        return <Redirect to={"/profile"} />
+const LoginFormRedux = reduxForm({form: "login"})(LoginForm);
+
+const Login = ({login, isAuth, captchaUrl}) => {
+    const submitData = formData => {
+        const {email, password, rememberMe, captcha} = formData;
+        login(email, password, rememberMe, captcha);
     }
-    return <LoginForm login={login} loginSuccess={loginSuccess}
-                      error={error} captchaUrl={props.captchaUrl}/>
+
+    if (isAuth) {
+        return <Redirect to={"/profile"}/>;
+    }
+
+    return (
+        <div className={`component--wrap`}>
+            <h2 className={classes.formTitle}>Sign in</h2>
+            <LoginFormRedux onSubmit={submitData} captchaUrl={captchaUrl}/>
+        </div>
+    )
 }
-const mapStateToProps = (state) => ({
-    captchaUrl:state.auth.captchaUrl,
-    isAuth: state.auth.isAuth,
-    loginSuccess: state.auth.loginSuccess,
-    error: state.auth.error
+
+const mapStateToProps = state => ({
+    isAuth: getIsAuth(state),
+    captchaUrl: getAuthCaptcha(state)
 })
 
-export default connect(mapStateToProps, {login})(Login);
+const mapDispatchToProps = {
+    login
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

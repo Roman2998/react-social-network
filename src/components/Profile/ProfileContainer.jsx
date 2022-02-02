@@ -1,61 +1,52 @@
-import React from 'react';
-import Profile from "./Profile";
-import {connect} from "react-redux";
-import {
-	getStatus,
-	getUserProfile,
-	savePhoto,
-	saveProfile,
-	updateStatus
-} from "../../Redux/Profile/profile-reducer";
-import {withRouter} from "react-router-dom";
-import {compose} from "redux";
+import React, { useEffect } from 'react'
+import Profile from './Profile'
+import { connect } from 'react-redux'
+import { getStatus, getProfile, savePhoto, toggleIsFetching, updateProfile } from '../../Redux/Profile/profile-reducer'
+import { withRouter } from 'react-router-dom'
+import { compose } from 'redux'
+import Preloader from '../common/Preloader/Preloader'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { getProfileFetching, getProfileState } from '../../Redux/Profile/profile-selectors'
+import { getAuthorizedId, getIsAuth } from '../../Redux/Auth/auth-selectors'
 
-class ProfileContainer extends React.Component {
-
-	refreshProfile() {
-		let userId = this.props.match.params.userId;
+const refreshProfile = async (id, authorizedUserId, getProfile, getStatus, history) => {
+	let userId = id
+	if (!userId) {
+		userId = authorizedUserId
 		if (!userId) {
-			userId = this.props.authorizedUserid;
-			if (!userId) {
-				this.props.history.push("/login");
-			}
-		}
-		this.props.getUserProfile(userId);
-		this.props.getStatus(userId)
-	}
-
-	componentDidMount() {
-		this.refreshProfile();
-	}
-
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (this.props.match.params.userId !== prevProps.match.params.userId) {
-			this.refreshProfile();
+			history.push('/login')
 		}
 	}
 
-	render() {
-		return (
-			<Profile {...this.props}
-			         isOwner={!this.props.match.params.userId}
-			         profile={this.props.profile}
-			         status={this.props.status}
-			         updateStatus={this.props.updateStatus}
-			         savePhoto={this.props.savePhoto}
-			/>
-		)
-	}
+	await getProfile(userId)
+	getStatus(userId)
+
+}
+
+const ProfileContainer = props => {
+	const { match, authorizedUserId, getProfile, getStatus } = props
+
+	useEffect(() => {
+		props.toggleIsFetching(true)
+		refreshProfile(match.params.userId, authorizedUserId, getProfile, getStatus, props.history)
+			.then(response => props.toggleIsFetching(false))
+	}, [match.params.userId])
+
+	if (props.isFetching) return <Preloader flag={props.isFetching}/>
+
+	return <Profile isOwner={!match.params.userId} {...props}/>
 }
 
 let mapStateToProps = (state) => ({
-	profile: state.profilePage.profile,
-	status: state.profilePage.status,
-	authorizedUserid: state.auth.id,
-	isAuth: state.auth.isAuth
-});
+	profile: getProfileState(state),
+	//status: state.profilePage.status,
+	isFetching: getProfileFetching(state),
+	authorizedUserId: getAuthorizedId(state),
+	isAuth: getIsAuth(state)
+})
 
 export default compose(
-	connect(mapStateToProps, {getUserProfile, saveProfile, getStatus, updateStatus, savePhoto}),
-	withRouter
-)(ProfileContainer);
+	connect(mapStateToProps, { getProfile, updateProfile, getStatus, savePhoto, toggleIsFetching }),
+	withRouter,
+	withAuthRedirect
+)(ProfileContainer)
