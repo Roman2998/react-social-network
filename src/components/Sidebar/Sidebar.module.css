@@ -16,6 +16,10 @@
     display: none;
 }
 
+.sidebar .sidebarDarkMode {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     .sidebar {
         display: none;
@@ -51,6 +55,12 @@
 
     .sidebar .sidebarLogin {
         display: flex;
+    }
+
+    .sidebar .sidebarDarkMode {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 }
 

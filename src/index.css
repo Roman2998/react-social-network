@@ -19,26 +19,100 @@ code {
 }
 
 :root {
-  --color-bg-main-dark: #0d1117;
-  --color-bg-dark: #0d1117;
-  --color-bg-btn-dark: #193057;
-  --color-bg-select-dark: rgba(25, 48, 87, 0.7);
+  --color-bg-main-dark: #EDEEF0;
+  --color-bg-dark: #dae2f5;
+  --color-bg-btn-dark: #4c92f5;
+  --color-bg-select-dark: rgba(72, 115, 196, 0.7);
   --color-border-dark: #30363d;
   --color-border-hover: #8b949e;
-  --color-bg-btn-hover-dark: #39306c;
-  --color-txt-dark: #c9d1d9;
-  --color-txt-active-dark: white;
-  --color-bg-input-dark: rgba(1, 4, 9, 0.3);
+  --color-bg-btn-hover-dark: #7a65e3;
+  --color-txt-dark: #101010;
+  --color-txt-active-dark: black;
+  --color-bg-input-dark: var(--color-bg-dark);
   --color-error-border-dark: rgba(248, 81, 73, .4);
   --color-error-bg-dark: rgba(248, 81, 73, 0.8);
   --color-error-txt-dark: var(--color-txt-active-dark);
-  --color-bg-muted: rgba(0, 0, 0, 0.5);
+  --color-bg-muted: rgba(143, 163, 232, 0.15);
   --radius-border: 5px;
   --transition: 0.2s;
   --size-font-base: 1rem;
   --size-font-btn: calc(0.9 * var(--size-font-base));
   --size-font-title: calc(1.4 * var(--size-font-base));
   --width-min-button: 100px;
+}
+[data-theme="dark"] {
+  --color-bg-main-dark: #0d1117;
+  --color-bg-dark: #0d1117;
+  --color-bg-btn-dark: #193057;
+  --color-bg-select-dark: rgba(25, 48, 87, 0.7);
+  --color-border-dark: #30363d;
+  --color-bg-btn-hover-dark: #39306c;
+  --color-txt-dark: #c9d1d9;
+  --color-txt-active-dark: white;
+  --color-bg-input-dark: rgba(1, 4, 9, 0.3);
+  --color-error-border-dark: rgba(248, 81, 73, .4);
+  --color-error-bg-dark: rgba(248, 81, 73, 0.8);
+  /*--color-error-txt-dark: var(--color-txt-active-dark);*/
+  --color-bg-muted: rgba(0, 0, 0, 0.5);
+}
+.toggle-theme-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.toggle-theme-wrapper span {
+  font-size: 28px;
+}
+
+.toggle-theme {
+  position: relative;
+  display: inline-block;
+  height: 34px;
+  width: 60px;
+}
+
+.toggle-theme input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  position: absolute;
+  cursor: pointer;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition: 0.2s;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 26px;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+input:checked + .slider {
+  background-color: cornflowerblue;
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 @media screen and (max-width: 768px) {

@@ -27,6 +27,9 @@
     .logo {
         max-width: 250px;
     }
+    .darkMode {
+        display: none;
+    }
     .headerLogin {
         display: none;
     }

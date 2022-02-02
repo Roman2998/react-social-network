@@ -4,21 +4,26 @@ import { NavLink } from 'react-router-dom'
 import logo from './../../logo.svg'
 import HeaderLoginContainer from '../HeaderLogin/HeaderLoginContainer'
 import HeaderBurger from './HeaderBurger/HeaderBurger'
+import DarkMode from '../common/DarkMode/DarkMode'
 
 const Header = (props) => {
-  return (
-    <header className={`${classes.header} component`}>
-      <NavLink to={'/profile'} className={classes.logo}>
-        <img src={logo} alt="logo"/>
-      </NavLink>
+	return (
+		<header className={`${classes.header} component`}>
+			<NavLink to={'/profile'} className={classes.logo}>
+				<img src={logo} alt="logo"/>
+			</NavLink>
 
-      <div className={classes.headerLogin}>
-        <HeaderLoginContainer/>
-      </div>
+			<div className={classes.darkMode}>
+				<DarkMode/>
+			</div>
 
-      <HeaderBurger/>
-    </header>
-  )
+			<div className={classes.headerLogin}>
+				<HeaderLoginContainer/>
+			</div>
+
+			<HeaderBurger/>
+		</header>
+	)
 }
 
 export default Header
