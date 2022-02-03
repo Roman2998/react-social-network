@@ -27,13 +27,12 @@ const profileReducer = (state = initialState, action) => {
 		case ADD_POST: {
 			let newPost = {
 				id: 5,
-				post: action.newPostText, // state.newPostText --> action.newPostText
+				post: action.newPostText,
 				likesCount: 0
 			};
 			return {
 				...state,
 				posts: [...state.posts, newPost],
-				//newPostText: ''
 			};
 		}
 		case SET_USER_PROFILE: {
@@ -117,7 +116,6 @@ export const savePhoto = (file) => async (dispatch) => {
 	}
 };
 
-//
 export const updateProfile = (profile) => async (dispatch, getState) => {
 	const userId = getState().auth.id;
 	const data = await profileAPI.updateProfile(profile);
